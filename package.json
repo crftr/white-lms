@@ -1,0 +1,16 @@
+{
+  "name": "white-lms",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "dependencies": {
+    "prettyjson": "^1.2.5",
+    "read-excel-file": "^5.5.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
