@@ -14,6 +14,25 @@ function isolateThePlayerRows(rows) {
 }
 
 let players = [];
+const losses = [
+    [ 'ATL', 'AZ', 'CAR', 'CINN', 'DAL', 'DEN', 'DET', 'GB', 'JAC', 'LAR', 'LV', 'NE', 'NYJ', 'SF', 'TENN', ],
+    [
+        'ATL',
+        'BAL',
+        'CAR',
+        'CHI',
+        'CINN',
+        'CLV',
+        'HOU',
+        'IND',
+        'LAC',
+        'LV',
+        'NO',
+        'PITT',
+        'SEA',
+        'WSH',
+    ]
+]
 
 readXlsxFile('lms.xlsx').then((arrayRows) => {
     arrayRows = cleanNullsFromNestedArrays(arrayRows);
@@ -37,6 +56,16 @@ readXlsxFile('lms.xlsx').then((arrayRows) => {
         const playerGames = playerRow.slice(1).map(game => game.trim().toUpperCase());
         player.games = playerGames;
         player.gamesEntered = playerGames.length;
+
+        let pLosses = 0;
+        player.games.forEach((game, weekIdx) => {
+            if (weekIdx >= losses.length) { return; }
+            if (losses[weekIdx].includes(game)) { pLosses++; }
+        });
+        player.losses = pLosses;
+
+        player.isOut = player.losses >= player.paidFor;
+
         player.gamesAreValid = (new Set(playerGames)).size === playerGames.length;
 
         players.push(player);
@@ -44,13 +73,18 @@ readXlsxFile('lms.xlsx').then((arrayRows) => {
 
     // console.log(prettyjson.render(playersObj));
 
-
     players.sort((p1, p2) => {
         if (!p1.gamesAreValid && p2.gamesAreValid) return -1;
         if (p1.gamesAreValid && !p2.gamesAreValid) return 1;
 
+        if (!p1.isOut && p2.isOut) return -1;
+        if (p1.isOut && !p2.isOut) return 1;
+
         if (p1.gamesEntered > p2.gamesEntered) return -1;
         if (p1.gamesEntered < p2.gamesEntered) return 1;
+
+        if (p1.losses < p2.losses) return -1;
+        if (p1.losses > p2.losses) return 1;
 
         if (p1.name < p2.paidFor) return -1;
         if (p1.name > p2.paidFor) return 1;
