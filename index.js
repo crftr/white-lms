@@ -16,22 +16,8 @@ function isolateThePlayerRows(rows) {
 let players = [];
 const losses = [
     [ 'ATL', 'AZ', 'CAR', 'CINN', 'DAL', 'DEN', 'DET', 'GB', 'JAC', 'LAR', 'LV', 'NE', 'NYJ', 'SF', 'TENN', ],
-    [
-        'ATL',
-        'BAL',
-        'CAR',
-        'CHI',
-        'CINN',
-        'CLV',
-        'HOU',
-        'IND',
-        'LAC',
-        'LV',
-        'NO',
-        'PITT',
-        'SEA',
-        'WSH',
-    ]
+    [ 'ATL', 'BAL', 'CAR', 'CHI', 'CINN', 'CLV', 'HOU', 'IND', 'LAC', 'LV', 'MINN', 'NO', 'PITT', 'SEA', 'TENN', 'WSH', ],
+    [ 'PITT', 'NE', 'BUFF', 'NYJ', 'DET', 'HOU', 'KC', 'STL', 'LV', 'WSH', 'LAC', 'SEA', 'TB', 'AZ', 'SF', 'NYG', ],
 ]
 
 readXlsxFile('lms.xlsx').then((arrayRows) => {
